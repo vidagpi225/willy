@@ -1,9 +1,10 @@
 <!doctype html>
-<html lang="vi">
+<html lang="vi" data-theme="system">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="color-scheme" content="light dark" />
+<meta name="theme-color" id="themeColorMeta" content="#faf6ee" />
 <link rel="icon" href="data:," />
 <title>Nhật Ký · Lịch Tuần · Nhạc</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,6 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Patrick+Hand&family=Dancing+Script:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
+    color-scheme:light;
     --bg:#faf6ee;
     --bg2:#f3ecdc;
     --surface:#fffdf8;
@@ -34,8 +36,35 @@
     --shadow:0 10px 30px rgba(35,32,26,.09);
     --radius:14px;
   }
+  /* Dark palette — applied when the user picks “Tối” … */
+  :root[data-theme="dark"]{
+    color-scheme:dark;
+    --bg:#171410;
+    --bg2:#171410;
+    --surface:#221d16;
+    --surface2:#2b251b;
+    --ink:#f0e9da;
+    --ink2:#bfb298;
+    --muted:#a89c85;
+    --line:#3a332a;
+    --accent:#f0834c;
+    --accent-ink:#ffffff;
+    --accent-soft:#3d2a1d;
+    --green:#9db89a;
+    --green-soft:#2c382a;
+    --warm:#9db89a;
+    --warm-soft:#2c382a;
+    --gold:#f0834c;
+    --danger:#f0834c;
+    --danger-soft:#3d2a1d;
+    --paper:#221d16;
+    --paper-line:#3a332a;
+    --shadow:0 10px 30px rgba(0,0,0,.35);
+  }
+  /* … or automatically when “Theo hệ thống” meets a dark system setting */
   @media (prefers-color-scheme: dark){
-    :root{
+    :root[data-theme="system"]{
+      color-scheme:dark;
       --bg:#171410;
       --bg2:#171410;
       --surface:#221d16;
@@ -92,6 +121,27 @@
   }
   .pill strong{color:var(--ink)}
   .pill .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex:none}
+
+  /* Theme switcher — Sáng / Tối / Theo hệ thống */
+  .theme-bar{
+    display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 14px;
+    padding-top:4px;
+  }
+  .theme-label{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+  .theme-switch{
+    display:inline-flex;gap:3px;background:var(--surface);border:1px solid var(--line);
+    border-radius:999px;padding:4px;box-shadow:var(--shadow);
+  }
+  .theme-btn{
+    border:0;background:transparent;color:var(--ink2);
+    min-height:38px;padding:8px 13px;border-radius:999px;
+    font-weight:700;font-size:13px;line-height:1;
+    display:inline-flex;align-items:center;justify-content:center;gap:7px;white-space:nowrap;
+  }
+  .theme-btn svg{width:16px;height:16px;flex:none}
+  .theme-btn:hover{color:var(--ink)}
+  .theme-btn.active{background:var(--accent);color:var(--accent-ink)}
+  .theme-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
   /* Tabs */
   .tabs{
@@ -344,10 +394,120 @@
   .modal h3{margin:0 0 16px;font-size:18px}
   .field{margin-bottom:14px}
   .modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:18px;flex-wrap:wrap}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+  /* ---------- Mobile ---------- */
+  html{-webkit-text-size-adjust:100%}
+  body{overflow-x:hidden}
+  button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+  img,svg,iframe{max-width:100%}
+  @media (max-width:640px){
+    .wrap{padding:14px 12px calc(64px + env(safe-area-inset-bottom))}
+    .theme-bar{justify-content:flex-start}
+    .theme-switch{display:flex;width:100%}
+    .theme-btn{flex:1 1 0;min-height:44px;padding:10px 6px;font-size:13px}
+    .hero{padding:16px 2px 4px}
+    .hero h1{font-size:29px;line-height:1.12}
+    .hero p{font-size:14.5px}
+    .hero-meta{gap:6px;margin-top:13px}
+    .pill{padding:6px 10px;font-size:12.5px}
+    .tabs{
+      top:calc(8px + env(safe-area-inset-top));margin:16px 0 18px;
+      display:grid;grid-template-columns:1fr 1fr;gap:5px;border-radius:16px;padding:5px;
+    }
+    .tab-btn{min-height:46px;padding:11px 8px;border-radius:11px;font-size:13.5px}
+    .section-head h2{font-size:20px}
+    .section-head .btn{width:100%;justify-content:center}
+    .section-head{margin-bottom:12px}
+    .btn{min-height:44px;padding:10px 14px}
+    .btn.small{min-height:38px}
+    .input,select.input,textarea.input{font-size:16px;padding:11px 12px}
+    /* Journal */
+    .entries{padding:14px}
+    .editor-top{padding:14px 14px 0}
+    .editor-top>div{flex:1 1 100%}
+    .editor-top .input{width:100%!important}
+    .toolbar{padding:10px 12px;gap:5px}
+    .toolbar select{flex:1 1 132px;max-width:none;height:42px;font-size:14px}
+    .toolbar input[type="color"]{width:42px;height:42px}
+    .tool-btn{min-width:42px;height:42px;padding:0 8px}
+    .toolbar .sep{display:none}
+    .paper-wrap{padding:12px}
+    .paper{min-height:340px;padding:10px 12px 24px 34px}
+    .paper::before{left:22px}
+    .paper-editor{min-height:300px;font-size:16px}
+    .editor-foot{padding:0 14px 14px}
+    .editor-foot>div{display:flex;width:100%}
+    .editor-foot .btn{flex:1;justify-content:center}
+    .save-state{width:100%}
+    /* Calendar */
+    .weekbar{flex-direction:column;align-items:stretch;gap:10px}
+    .weekbar>div:first-child{display:grid!important;grid-template-columns:1fr 1fr 1fr;gap:6px}
+    .weekbar .btn{padding:9px 6px;font-size:12.5px;justify-content:center}
+    .weekbar .range{text-align:left!important}
+    .day-col{min-height:0;padding:11px}
+    .check-btn{width:28px;height:28px;border-radius:8px}
+    .check-btn svg{width:15px;height:15px}
+    .add-task-btn{min-height:44px;padding:10px}
+    .task-actions button{padding:8px 8px;font-size:12.5px}
+    /* Stats */
+    .ring-card{padding:18px 14px}
+    .ring-wrap{width:168px;height:168px}
+    .ring-wrap svg{width:168px;height:168px}
+    .ring-center .pct{font-size:38px}
+    .chart-card,.list-card{padding:16px 14px}
+    .bars{gap:6px;height:132px}
+    .bar-lbl{font-size:10px}
+    .todo-row{flex-wrap:wrap}
+    .todo-row .when{min-width:0}
+    .todo-row .btn{margin-left:auto}
+    .day-breakdown{grid-template-columns:repeat(2,1fr)}
+    /* Music */
+    .player-card,.queue-card{padding:16px 14px}
+    .now-playing{flex-wrap:wrap;padding:12px}
+    .transport{gap:12px}
+    .t-btn{width:48px;height:48px}
+    .t-btn.main{width:62px;height:62px}
+    .seek-row,.vol-row{gap:8px}
+    .seek-row input[type="range"],.vol-row input[type="range"]{min-height:28px}
+    .url-row .btn{width:100%;justify-content:center}
+    /* Backup + modal */
+    .backup-bar{padding:14px}
+    .backup-bar>div{width:100%}
+    .backup-bar .btn{flex:1 1 100%;justify-content:center;text-align:center}
+    .field-row{grid-template-columns:1fr}
+    .modal{padding:18px 16px calc(18px + env(safe-area-inset-bottom))}
+    .modal-actions .btn{flex:1;justify-content:center}
+    footer{padding:0 8px}
+  }
+  @media (max-width:380px){
+    .hero h1{font-size:26px}
+    .theme-btn{font-size:12px;gap:5px}
+    .theme-btn svg{width:14px;height:14px}
+    .stat-cards{grid-template-columns:1fr}
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
+
+  <div class="theme-bar">
+    <span class="theme-label" id="themeLabel">Giao diện</span>
+    <div class="theme-switch" role="group" aria-labelledby="themeLabel">
+      <button type="button" class="theme-btn" data-theme-value="light" aria-pressed="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+        Sáng
+      </button>
+      <button type="button" class="theme-btn" data-theme-value="dark" aria-pressed="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        Tối
+      </button>
+      <button type="button" class="theme-btn active" data-theme-value="system" aria-pressed="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        Hệ thống
+      </button>
+    </div>
+  </div>
 
   <header class="hero">
     <h1>Sổ tay <em>nhật ký</em>, lịch tuần<br>và nhạc của riêng bạn</h1>
@@ -644,7 +804,7 @@
       <label class="lbl" for="taskTitle">Tên việc *</label>
       <input class="input" type="text" id="taskTitle" placeholder="Ví dụ: Nộp bài tập, đi chợ, tập thể dục…" maxlength="120">
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+    <div class="field-row">
       <div class="field">
         <label class="lbl" for="taskDate">Ngày</label>
         <input class="input" type="date" id="taskDate">
@@ -701,6 +861,39 @@ var state = {
   editingTaskId: null,
   currentTrackId: null
 };
+
+/* ================= Theme: light / dark / system ================= */
+var themeBtns=document.querySelectorAll(".theme-btn");
+var systemDarkQuery=window.matchMedia("(prefers-color-scheme: dark)");
+function resolvedTheme(value){
+  if(value==="dark") return "dark";
+  if(value==="light") return "light";
+  return systemDarkQuery.matches ? "dark" : "light";
+}
+function applyTheme(value){
+  if(value!=="light" && value!=="dark") value="system";
+  document.documentElement.setAttribute("data-theme", value);
+  themeBtns.forEach(function(b){
+    var on=b.getAttribute("data-theme-value")===value;
+    b.classList.toggle("active", on);
+    b.setAttribute("aria-pressed", on ? "true" : "false");
+  });
+  var meta=$("themeColorMeta");
+  if(meta) meta.setAttribute("content", resolvedTheme(value)==="dark" ? "#171410" : "#faf6ee");
+}
+themeBtns.forEach(function(b){
+  b.addEventListener("click",function(){ applyTheme(b.getAttribute("data-theme-value")); });
+});
+if(typeof systemDarkQuery.addEventListener==="function"){
+  systemDarkQuery.addEventListener("change",function(){
+    if(document.documentElement.getAttribute("data-theme")==="system") applyTheme("system");
+  });
+}else if(typeof systemDarkQuery.addListener==="function"){
+  systemDarkQuery.addListener(function(){
+    if(document.documentElement.getAttribute("data-theme")==="system") applyTheme("system");
+  });
+}
+applyTheme(document.documentElement.getAttribute("data-theme") || "system");
 
 /* ================= Tabs ================= */
 var tabBtns=document.querySelectorAll(".tab-btn");
